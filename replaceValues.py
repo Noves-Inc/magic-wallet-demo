@@ -7,8 +7,6 @@ args = {}
 args['BLOCKCHAIN-NETWORK'] = sys.argv[1]
 args['MAGIC-API-KEY'] = sys.argv[2]
 args['TRANSLATE-API-KEY'] = sys.argv[3]
-args['TRANSLATE-ENDPOINT'] = sys.argv[4]
-args['FORESIGHT-ENPOINT'] = sys.argv[5]
 
 # For each key in args, replace the value in the file .env.production
 

@@ -39,3 +39,7 @@ If you want to run this inside a Docker container, we've included a Dockerfile a
 .env file in the container any needed environment variables.
 
 This is helpful when deploying the container using a CI/CD pipeline and wanting to inject sensible values from a secrets manager / key vault into the pipeline.
+
+The script assumes that an .env.production file like the one available in the repository (with placeholder values, exactly as currently configured) will be available to write to.
+
+When Next.JS runs, it will read from that file, after the placeholder values have been replaced with the injected ones.

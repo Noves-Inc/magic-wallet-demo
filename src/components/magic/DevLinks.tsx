@@ -37,12 +37,8 @@ const Links = ({ dark, footer }: Props) => {
                 }`}
             />
             <div className={`link ${dark ? 'text-[#6851ff]' : 'text-[#fff]'}`}>
-                <a
-                    href="https://dashboard.magic.link/signup"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    Magic Dashboard
+                <a href="https://app.noves.fi" target="_blank" rel="noreferrer">
+                    Noves Dashboard
                 </a>
             </div>
             <div
@@ -51,8 +47,12 @@ const Links = ({ dark, footer }: Props) => {
                 }`}
             />
             <div className={`link ${dark ? 'text-[#6851ff]' : 'text-[#fff]'}`}>
-                <a href="https://app.noves.fi" target="_blank" rel="noreferrer">
-                    Noves Dashboard
+                <a
+                    href="https://dashboard.magic.link/signup"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    Magic Dashboard
                 </a>
             </div>
         </div>

@@ -28,6 +28,9 @@ const AppHeader = () => {
                         </div>
                     </div>
                 </div>
+                <div className="text-center text-transparent text-opacity-50 text-base font-normal font-['SF Mono'] leading-normal">
+                    Demo
+                </div>
             </div>
         </div>
     );

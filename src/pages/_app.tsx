@@ -7,10 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <MagicProvider>
             <Head>
-                <title>
-                    Noves <> Magic Demo</>
-                </title>
-                ∂{' '}
+                <title>Noves &lt;&gt; Magic Demo</title>
             </Head>
             <Component {...pageProps} />
         </MagicProvider>

@@ -1,0 +1,32 @@
+{
+  "name": "noves-universal-wallet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint --fix"
+  },
+  "dependencies": {
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.35",
+    "@types/react-dom": "18.0.11",
+    "dayjs": "^1.11.10",
+    "eslint-config-next": "13.3.0",
+    "lodash": "^4.17.21",
+    "magic-sdk": "^21.0.0",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.4",
+    "web3": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.200",
+    "autoprefixer": "^10.4.15",
+    "eslint": "^8.45.0",
+    "postcss": "^8.4.28",
+    "tailwindcss": "^3.3.3"
+  }
+}

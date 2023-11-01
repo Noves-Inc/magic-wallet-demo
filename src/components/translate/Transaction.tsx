@@ -1,0 +1,160 @@
+import React, { Dispatch, FC, SetStateAction, useCallback, useState } from 'react';
+import Divider from '@/components/ui/Divider';
+import CardLabel from '@/components/ui/CardLabel';
+import { generateFlowViewData } from '@/utils/generateFlowViewData';
+import { TableActionCard } from './TableActionCard';
+import { timeago } from '@/utils/timeago';
+import { truncateMiddle } from '@/utils/stringHelpers';
+import { ResponseData } from '@/utils/types';
+import { getNetworkName } from '@/utils/networks';
+
+interface Props {
+    tx: ResponseData;
+    setItem: Dispatch<SetStateAction<ResponseData | undefined>>
+}
+
+
+const leftArrow = (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1">
+    <path fillRule="evenodd" d="M20.25 12a.75.75 0 01-.75.75H6.31l5.47 5.47a.75.75 0 11-1.06 1.06l-6.75-6.75a.75.75 0 010-1.06l6.75-6.75a.75.75 0 111.06 1.06l-5.47 5.47H19.5a.75.75 0 01.75.75z" clipRule="evenodd" />
+  </svg>
+
+)
+const code = (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 ml-1">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+  </svg>
+)
+
+const document = (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 ml-1">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+  </svg>
+
+)
+
+const Transaction: FC<Props> = ({ tx, setItem }) => {
+  const [copied, setCopied] = useState<string>('Copy');
+  const [showCode, setShowCode] = useState<boolean>(false)
+
+  const BackButton = () => (
+    <button
+      className='wallet-method flex items-center mb-5'
+      onClick={() => setItem(undefined)}
+    >
+      {leftArrow}
+        Back
+    </button>
+  )
+
+  const copy = useCallback(() => {
+    const hash = tx.rawTransactionData.transactionHash
+
+    if (hash && copied === 'Copy') {
+      setCopied('Copied!');
+      navigator.clipboard.writeText(hash);
+      setTimeout(() => {
+        setCopied('Copy');
+      }, 1000);
+    }
+  }, [copied, tx]);
+
+  const SeeCode = () => (
+    <button
+      className='mb-5'
+      onClick={() => setShowCode(!showCode)}
+    >
+      {
+        showCode ?
+          <span className='flex items-center'>Show Default {document}</span>
+          :
+          <span className='flex items-center'>Show Code{code}</span>
+      }
+    </button>
+  )
+
+  return (
+    <div>
+      <CardLabel leftHeader={<BackButton/>} rightAction={<SeeCode/>}/>
+      {
+        !showCode ? (
+          <>
+            <CardLabel leftHeader="Tx Hash" rightAction={<div onClick={copy}>{copied}</div>} history />
+            <div className='code'>{tx.rawTransactionData.transactionHash}</div>
+            <Divider/>
+            <CardLabel leftHeader="Chain" history />
+            <div className='code'>{getNetworkName()}</div>
+            <Divider/>
+            <CardLabel leftHeader="Timestamp" history />
+            <div className='code'>{timeago(tx.rawTransactionData.timestamp * 1000)}</div>
+            <Divider/>
+            <CardLabel leftHeader="Type" history />
+            <div className='code'>{tx.classificationData.type}</div>
+            <Divider/>
+            <CardLabel leftHeader="Description" history />
+            <div className='code'>{tx.classificationData.description}</div>
+            <Divider/>
+            <CardLabel leftHeader="Flow" history />
+
+            <FlowView tx={tx} />
+          </>
+        ) : (
+          <pre className='code overflow-x-scroll'>
+            {JSON.stringify(tx, null, 2)}
+          </pre>
+        )
+      }
+    </div>
+  );
+};
+
+const fireIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="ml-1 w-4 text-orange-700 cursor-pointer motion-reduce:animate-pulse">
+    <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
+  </svg>
+
+)
+
+interface FlowProps {
+    tx: ResponseData
+}
+
+const FlowView: FC<FlowProps> = ({tx}) => {
+  if (!tx) {
+    return null;
+  }
+
+  const tableViewData = generateFlowViewData(tx);
+
+  return (
+    <div>
+      {tableViewData.map((item, i) => (
+        <div key={i} >
+          <div className='flex flex-col items-center'>
+            <TableActionCard
+              action={item.action}
+            />
+
+            <div className="text-sm text-gray-500">
+              <div className="text-gray-900">
+                <span className="flex">
+                  {item.rightActor.name}
+                  {item.rightActor.name === 'Null address' && fireIcon}
+                </span>
+              </div>
+
+              <span>{truncateMiddle(item.rightActor.address || '', 6, 4)}</span>
+            </div>
+          </div>
+          {
+            i < tableViewData.length - 1 && (
+              <Divider/>
+            )
+          }
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default Transaction;

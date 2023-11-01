@@ -42,7 +42,7 @@ const Links = ({ dark, footer }: Props) => {
                     target="_blank"
                     rel="noreferrer"
                 >
-                    Dashboard
+                    Magic Dashboard
                 </a>
             </div>
             <div
@@ -51,12 +51,8 @@ const Links = ({ dark, footer }: Props) => {
                 }`}
             />
             <div className={`link ${dark ? 'text-[#6851ff]' : 'text-[#fff]'}`}>
-                <a
-                    href="https://discord.gg/magiclabs"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    Discord
+                <a href="https://app.noves.fi" target="_blank" rel="noreferrer">
+                    Noves Dashboard
                 </a>
             </div>
         </div>

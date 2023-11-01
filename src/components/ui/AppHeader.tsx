@@ -20,16 +20,13 @@ const AppHeader = () => {
                             Noves
                         </div>
                     </Link>
-                    <Image src={xImage} alt="separator" className="w-4 h-4" />{' '}
+                    <Image src={xImage} alt="separator" className="w-4 h-4" />
                     <div className="flex flex-col gap-2.5 items-center">
                         <Image src={Logo} alt="logo" />
                         <div className="text-center text-white text-xl font-extrabold font-['Inter'] leading-[30px]">
                             Magic
                         </div>
                     </div>
-                </div>
-                <div className="text-center text-white text-opacity-50 text-base font-normal font-['SF Mono'] leading-normal">
-                    Demo
                 </div>
             </div>
         </div>

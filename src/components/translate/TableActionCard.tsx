@@ -10,12 +10,20 @@ const downArrow = (
 
 );
 
+const upArrow = (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
+  </svg>
+)
+
 interface TableActionCardProps {
   action: Action;
 }
 
 export function TableActionCard({ action }: TableActionCardProps) {
   const label = camelCaseToSentence(action.label);
+
+  console.log(action)
 
   return (
     <div className="relative flex flex-col items-center">
@@ -41,8 +49,17 @@ export function TableActionCard({ action }: TableActionCardProps) {
       </div>
 
       <div className='my-2 text-purple-600 flex flex-col items-center'>
-        <span className='text-sm'>{action.flowDirection === 'toRight' ? 'to' : 'from'}</span>
-        {downArrow}
+        {action.flowDirection === "toRight" ?
+          <>
+            <span className='text-sm'>to</span>
+            {downArrow}
+          </>
+        :
+          <>
+          {upArrow}
+          <span className='text-sm'>from</span>
+          </>
+        }
       </div>
     </div>
   );

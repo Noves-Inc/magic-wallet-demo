@@ -23,8 +23,6 @@ interface TableActionCardProps {
 export function TableActionCard({ action }: TableActionCardProps) {
   const label = camelCaseToSentence(action.label);
 
-  console.log(action)
-
   return (
     <div className="relative flex flex-col items-center">
       <div className="flex flex-col items-center gap-y-1 rounded-md bg-purple-50 px-5 py-1 text-xs font-medium text-purple-600 ring-1 ring-inset ring-purple-600/20 w-fit cursor-pointer">
